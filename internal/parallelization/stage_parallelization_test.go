@@ -35,8 +35,10 @@ func TestParallelization(t *testing.T) {
 	t.Run("could not with cycle dependencies", func(t *testing.T) {
 		stage1 := NewStage("Stage1")
 		stage2 := NewStage("Stage2")
+		stage3 := NewStage("Stage3")
 		stage1.DependsOn(&stage2)
-		stage2.DependsOn(&stage1)
+		stage2.DependsOn(&stage3)
+		stage3.DependsOn(&stage1)
 
 		stageParallelization := &StageParallelization{}
 		sortedStages := stageParallelization.Of([]Stage{stage1, stage2})
